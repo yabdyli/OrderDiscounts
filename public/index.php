@@ -10,6 +10,6 @@ $order_input = json_decode(file_get_contents('../example-orders/order3.json'));
 
 $product_inputs = json_decode(file_get_contents('../data/products.json'));
 
-$newOrder = new OrderController();
+//$newOrder = new OrderController();
 
-print_r($newOrder->makeOrder($order_input, $product_inputs));
+print_r(OrderController::makeOrder($order_input, $product_inputs));

@@ -60,11 +60,34 @@ class Order
 	}
 
 	/**
+	 * Add a product to the order
+	 *
+	 * @param array $orderData
+	 * @param array $productData
+	 * @return void
+	 */
+	public function insertProducts($orderData, $productData)
+	{
+		foreach($orderData->items as $product){
+
+			$originalProduct = array_search($product->{'product-id'}, array_column($productData,'id'));
+			
+			$this->add(
+						$product->{'product-id'},
+						$product->{'unit-price'},
+						$productData[$originalProduct]->description,
+						$product->{'quantity'},
+						$productData[$originalProduct]->category
+					);
+		}
+	}
+
+	/**
 	 * Get the total parameter
 	 *
 	 * @return decimal
 	 */
-	protected function getTotal()
+	public function getTotal()
 	{
 	    return $this->total;
 	}

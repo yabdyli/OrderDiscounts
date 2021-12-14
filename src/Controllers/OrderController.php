@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controllers;
 
 use App\Models\Order;
@@ -8,26 +7,16 @@ use App\Models\Order;
 class OrderController
 {
 
-
-	public function makeOrder($orderData, $productData)
+	public static function makeOrder($orderData, $productData)
 	{
-
+		//Create new Order
 		$newOrder = new Order($orderData->{'customer-id'});
 
-		foreach($orderData->items as $product){
-
-			$originalProduct = array_search($product->{'product-id'}, array_column($productData,'id'));
-			
-			$newOrder->add(
-						$product->{'product-id'},
-						$product->{'unit-price'},
-						$productData[$originalProduct]->description,
-						$product->{'quantity'},
-						$productData[$originalProduct]->category
-					);
-		}
+		//Add new products in order and match them with provided json products 
+		$newOrder->insertProducts($orderData, $productData);
 
 		return $newOrder->getProducts();
+
 	}
 
 }
