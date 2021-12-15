@@ -97,4 +97,34 @@ class Product
 	        $this->quantity = $value;
 	    }
 	}
+
+	/**
+	 * Get the quantity parameter
+	 *
+	 * @return integer
+	 */
+	public function getQuantity()
+	{
+	    return $this->quantity;
+	}
+
+	/**
+	 * Get the sku parameter
+	 *
+	 * @return integer
+	 */
+	public function getSku()
+	{
+	    return $this->sku;
+	}
+
+	/**
+	 * Get the category parameter
+	 *
+	 * @return integer
+	 */
+	public function getCategory()
+	{
+	    return $this->category_id;
+	}
 }

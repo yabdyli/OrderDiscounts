@@ -25,16 +25,23 @@ class Order
 	 */
 	protected $total;
 
+	/**
+	 * The discount_messages of the order
+	 *
+	 * @var array
+	 */
+	protected $discount_messages;
 
 	/**
 	 * Create a new Order
 	 *
-	 * @param RegionInterface $region
+	 * @param integer $customer_id
 	 * @return void
 	 */
-	public function __construct($customer_id)
+	public function __construct($customer_id,$total)
 	{
 		$this->customer_id = $customer_id;
+		$this->total = $total;
 	}
 
 	/**
@@ -83,6 +90,32 @@ class Order
 	}
 
 	/**
+	 * Update Order products
+	 *
+	 * @param array $products
+	 * @return void
+	 */
+	public function updateProductsQuantity($products)
+	{
+		foreach($products as $product){
+
+			$_orderproduct = array_search($product->getSku(), array_column($this->products,'sku'));
+			
+			$this->products[$_orderproduct]->setQuantity($product->getQuantity());
+		}
+	}
+
+	/**
+	 * Get the newTotal parameter
+	 *
+	 * @return decimal
+	 */
+	public function updateTotal($newTotal)
+	{
+	     $this->total = $newTotal;
+	}
+
+	/**
 	 * Get the total parameter
 	 *
 	 * @return decimal
@@ -111,4 +144,25 @@ class Order
 	{
 	    return $this->products;
 	}
+
+	/**
+	 * Set discount_messages
+	 *
+	 * @return void
+	 */
+	public function setDiscount($discount_message)
+	{
+	    $this->discount_messages[] = $discount_message;
+	}
+
+	/**
+	 * Get the discount_messages parameter
+	 *
+	 * @return array
+	 */
+	public function getDiscounts()
+	{
+	    return $this->discount_messages;
+	}
+
 }
