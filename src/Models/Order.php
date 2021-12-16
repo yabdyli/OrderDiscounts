@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-class Order
+use JsonSerializable;
+
+class Order implements JsonSerializable
 {
 	/**
 	 * The products of the order
@@ -164,5 +166,20 @@ class Order
 	{
 	    return $this->discount_messages;
 	}
+
+	/**
+	 * Serialize the Order object to Json
+	 *
+	 * @return mixed
+	 */
+	public function jsonSerialize(): mixed
+	{
+        return [
+            'customer_id' => $this->customer_id,
+            'items' => $this->products,
+            'discounts' => $this->discount_messages,
+            'total'	  => (string)$this->total
+        ]; 
+    }
 
 }

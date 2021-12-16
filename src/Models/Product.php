@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-class Product
+use JsonSerializable;
+
+class Product implements JsonSerializable
 {
 	/**
 	 * The product's stock keeping unit
@@ -127,4 +129,21 @@ class Product
 	{
 	    return $this->category_id;
 	}
+
+	/**
+	 * Serialize the Product object to Json
+	 *
+	 * @return mixed
+	 */
+	public function jsonSerialize(): mixed
+	{
+        return [
+            'sku' => $this->sku,
+            'quantity' => (string) $this->quantity,
+            'price' => $this->price,
+            'category_id'	  => $this->category_id,
+            'description' => $this->description
+
+        ]; 
+    }
 }
