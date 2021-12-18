@@ -18,7 +18,7 @@ class Product implements JsonSerializable
 	 *
 	 * @var decimal
 	 */
-	protected $price;
+	public $price;
 
 	/**
 	 * The category of product
@@ -72,6 +72,9 @@ class Product implements JsonSerializable
 	    if (is_int($value)) 
 	    {
 	        $this->category_id = $value;
+	    }else
+	    {
+	    	 throw new InvalidArgumentException('It only accepts integers. Input was: '.$value);
 	    }
 	}
 
@@ -97,6 +100,9 @@ class Product implements JsonSerializable
 	    if (is_int($value)) 
 	    {
 	        $this->quantity = $value;
+	    }else
+	    {
+	    	 throw new InvalidArgumentException('It only accepts integers. Input was: '.$value);
 	    }
 	}
 
