@@ -5,6 +5,7 @@ namespace Tests;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Customer;
+use App\Discounts\DiscountLoyalCustomer;
 use App\Discounts\DiscountProductByCategory;
 use App\Discounts\DiscountCheapestProduct;
 use PHPUnit\Framework\TestCase;
@@ -37,6 +38,35 @@ class OrderTest extends TestCase
 		$this->assertCount(
 			$expectedTwoOrderProducts,
 			$newOrder->getProducts()
+		);
+
+	}
+
+	/** @test */
+	function it_rewards_loyal_customers()
+	{	
+		$order_input = json_decode(file_get_contents('./example-orders/order2.json'));
+
+		$newOrder = new Order($order_input->{'customer-id'},$order_input->total);
+		
+		$newOrder->insertProducts($order_input, $this->product_inputs);
+		
+		$originalCustomer = array_search($order_input->{'customer-id'}, array_column($this->customer_inputs,'id'));
+
+		$customer = new Customer(
+						$this->customer_inputs[$originalCustomer]->id,
+						$this->customer_inputs[$originalCustomer]->name,
+						$this->customer_inputs[$originalCustomer]->since,
+						$this->customer_inputs[$originalCustomer]->revenue
+					);
+
+		$discountLoyalCustomer = (new DiscountLoyalCustomer($customer,2))->discount($newOrder);
+
+		$expectedDiscount = 2.495;
+
+		$this->assertEquals(
+			$expectedDiscount,
+			$discountLoyalCustomer
 		);
 
 	}
@@ -92,4 +122,22 @@ class OrderTest extends TestCase
 
 		$this->assertEquals(3,$DiscountCheapestProduct);
 	}
+
+	/** @test */
+	public function it_should_have_only_integer_quantity()
+    {
+
+        $order_input = json_decode(file_get_contents('./example-orders/order3.json'));
+
+        $newOrder = new Order($order_input->{'customer-id'},$order_input->total);
+
+        $newOrder->insertProducts($order_input, $this->product_inputs);
+
+        $firstproduct = $newOrder->getProducts()[0];
+
+        $this->expectException(\Exception::class);
+
+        $firstproduct->setQuantity("just some quantity");
+        
+    }
 }

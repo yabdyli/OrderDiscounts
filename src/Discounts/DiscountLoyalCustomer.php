@@ -46,6 +46,8 @@ class DiscountLoyalCustomer implements DiscountInterface
 
 		}
 
+		return $discount_percentage;
+
 	}
 
 }

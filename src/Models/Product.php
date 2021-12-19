@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use JsonSerializable;
+use InvalidArgumentException;
 
 class Product implements JsonSerializable
 {
