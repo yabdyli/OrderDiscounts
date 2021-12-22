@@ -21,7 +21,7 @@ API Endpoint
 POST /orders
 ```
 
-JSON example
+With JSON example
 ```shell
 {
   "id": "3",

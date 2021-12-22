@@ -27,7 +27,7 @@ class OrderTest extends TestCase
 	/** @test */
 	function it_adds_new_order()
 	{	
-		$order_input = json_decode(file_get_contents('./example-orders/order3.json'));
+		$order_input = json_decode(file_get_contents(__DIR__.'/example-orders/order3.json'));
 
 		$newOrder = new Order($order_input->{'customer-id'},$order_input->total);
 		
@@ -45,7 +45,7 @@ class OrderTest extends TestCase
 	/** @test */
 	function it_rewards_loyal_customers()
 	{	
-		$order_input = json_decode(file_get_contents('./example-orders/order2.json'));
+		$order_input = json_decode(file_get_contents(__DIR__.'/example-orders/order2.json'));
 
 		$newOrder = new Order($order_input->{'customer-id'},$order_input->total);
 		
@@ -75,7 +75,7 @@ class OrderTest extends TestCase
 	function it_increases_product_quantity_for_specific_category()
 	{
 	
-		$order_input = json_decode(file_get_contents('./example-orders/order1.json'));
+		$order_input = json_decode(file_get_contents(__DIR__.'/example-orders/order1.json'));
 
 		$newOrder = new Order($order_input->{'customer-id'},$order_input->total);
 		
@@ -103,7 +103,7 @@ class OrderTest extends TestCase
 	/** @test */
 	function it_discounts_cheapest_product_in_order()
 	{
-		$order_input = json_decode(file_get_contents('./example-orders/order3.json'));
+		$order_input = json_decode(file_get_contents(__DIR__.'/example-orders/order3.json'));
 
 		$newOrder = new Order($order_input->{'customer-id'},$order_input->total);
 
@@ -127,7 +127,7 @@ class OrderTest extends TestCase
 	public function it_should_have_only_integer_quantity()
     {
 
-        $order_input = json_decode(file_get_contents('./example-orders/order3.json'));
+        $order_input = json_decode(file_get_contents(__DIR__.'/example-orders/order3.json'));
 
         $newOrder = new Order($order_input->{'customer-id'},$order_input->total);
 
