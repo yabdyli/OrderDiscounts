@@ -1,4 +1,4 @@
-# Order Discounts
+# Order Discounts [![StyleCI](https://github.styleci.io/repos/439947427/shield?branch=main)](https://github.styleci.io/repos/439947427?branch=main)
 
 ## Setup
 
