@@ -10,42 +10,39 @@ use App\Discounts\DiscountCheapestProduct;
 
 class OrderController
 {
+    public static function saveOrder()
+    {
+        if (file_get_contents('php://input')) {
+            $orderData = json_decode(file_get_contents('php://input'));
 
-	public static function saveOrder()
-	{	
-		if(file_get_contents('php://input')){
+            $productData = json_decode(file_get_contents('../data/products.json'));
 
-			$orderData = json_decode(file_get_contents('php://input'));
+            $customerData = json_decode(file_get_contents('../data/customers.json'));
 
-			$productData = json_decode(file_get_contents('../data/products.json'));
+            //Create new Order
+            $newOrder = new Order($orderData->{'customer-id'}, $orderData->total);
 
-			$customerData = json_decode(file_get_contents('../data/customers.json'));
+            //Add new products in order and match them with provided json products
+            $newOrder->insertProducts($orderData, $productData);
 
-			//Create new Order
-			$newOrder = new Order($orderData->{'customer-id'},$orderData->total);
+            $originalCustomer = array_search($orderData->{'customer-id'}, array_column($customerData, 'id'));
 
-			//Add new products in order and match them with provided json products 
-			$newOrder->insertProducts($orderData, $productData);
+            $customer = new Customer(
+                $customerData[$originalCustomer]->id,
+                $customerData[$originalCustomer]->name,
+                $customerData[$originalCustomer]->since,
+                $customerData[$originalCustomer]->revenue
+            );
 
-			$originalCustomer = array_search($orderData->{'customer-id'}, array_column($customerData,'id'));
+            $loaylDiscount = (new DiscountLoyalCustomer($customer))->discount($newOrder);
 
-			$customer = new Customer(
-							$customerData[$originalCustomer]->id,
-							$customerData[$originalCustomer]->name,
-							$customerData[$originalCustomer]->since,
-							$customerData[$originalCustomer]->revenue
-						);
+            $DiscountProductByCategory = (new DiscountProductByCategory($customer, 2))->discount($newOrder);
 
-			$loaylDiscount = (new DiscountLoyalCustomer($customer))->discount($newOrder);
+            $DiscountCheapestProduct = (new DiscountCheapestProduct($customer, 1))->discount($newOrder);
 
-			$DiscountProductByCategory = (new DiscountProductByCategory($customer,2))->discount($newOrder);		
+            header('Content-Type: application/json');
 
-			$DiscountCheapestProduct = (new DiscountCheapestProduct($customer,1))->discount($newOrder);		
-
-			header('Content-Type: application/json'); 
-
-			echo json_encode($newOrder);
-		}
-	}
-
+            echo json_encode($newOrder);
+        }
+    }
 }
