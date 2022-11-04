@@ -1,15 +1,24 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
         'type' => 'micro-service',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => NULL,
-        'name' => 'orderdiscounts/orderdiscounts',
+        'reference' => 'dca0cce025dc51d37a212655c7ec9bd32ae9ccf7',
+        'name' => 'yabdyli/orderdiscounts',
         'dev' => true,
     ),
     'versions' => array(
+        'bramus/router' => array(
+            'pretty_version' => '1.6.1',
+            'version' => '1.6.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../bramus/router',
+            'aliases' => array(),
+            'reference' => '55657b76da8a0a509250fb55b9dd24e1aa237eba',
+            'dev_requirement' => false,
+        ),
         'doctrine/instantiator' => array(
             'pretty_version' => '1.4.0',
             'version' => '1.4.0.0',
@@ -39,15 +48,6 @@
             'aliases' => array(),
             'reference' => '210577fe3cf7badcc5814d99455df46564f3c077',
             'dev_requirement' => true,
-        ),
-        'orderdiscounts/orderdiscounts' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'type' => 'micro-service',
-            'install_path' => __DIR__ . '/../../',
-            'aliases' => array(),
-            'reference' => NULL,
-            'dev_requirement' => false,
         ),
         'phar-io/manifest' => array(
             'pretty_version' => '2.0.3',
@@ -327,6 +327,15 @@
             'aliases' => array(),
             'reference' => '6964c76c7804814a842473e0c8fd15bab0f18e25',
             'dev_requirement' => true,
+        ),
+        'yabdyli/orderdiscounts' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'type' => 'micro-service',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'reference' => 'dca0cce025dc51d37a212655c7ec9bd32ae9ccf7',
+            'dev_requirement' => false,
         ),
     ),
 );
